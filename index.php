@@ -1,57 +1,61 @@
-<?php
-// index.php
-$mahasiswa = [
-    ['npm' => '23753', 'nama' => 'Vina Sahara', 'prodi' => 'Teknik Informatika', 'angkatan' => 2023],
-    ['npm' => '23754', 'nama' => 'Cindy Naysilla', 'prodi' => 'Sistem Informasi', 'angkatan' => 2022],
-    ['npm' => '23755', 'nama' => 'Cici Delia', 'prodi' => 'Teknik Komputer', 'angkatan' => 2024],
-];
-?>
-<!doctype html>
-<html lang="id">
+<?php include 'koneksi.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KSI2025 - Data Mahasiswa</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSI2025</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="#">KSI2025</a>
   </div>
 </nav>
 
-<main class="container my-5">
-  <h2 class="mb-4">Data Mahasiswa</h2>
+<!-- Content -->
+<div class="container mt-4">
+    <h3>Data Mahasiswa</h3>
+    <table class="table table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>NPM</th>
+                <th>Nama</th>
+                <th>Jurusan</th>
+                <th>Prodi</th>
+                <th>No HP</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $no = 1;
+            $result = mysqli_query($conn, "SELECT * FROM mahasiswa");
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>
+                        <td>{$no}</td>
+                        <td>{$row['npm']}</td>
+                        <td>{$row['nama']}</td>
+                        <td>{$row['jurusan']}</td>
+                        <td>{$row['prodi']}</td>
+                        <td>{$row['no_hp']}</td>
+                        <td>{$row['email']}</td>
+                      </tr>";
+                $no++;
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
 
-  <table class="table table-striped table-bordered">
-    <thead class="table-dark">
-      <tr>
-        <th>#</th>
-        <th>NPM</th>
-        <th>Nama</th>
-        <th>Prodi</th>
-        <th>Angkatan</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($mahasiswa as $i => $m): ?>
-      <tr>
-        <td><?= $i + 1 ?></td>
-        <td><?= htmlspecialchars($m['npm']) ?></td>
-        <td><?= htmlspecialchars($m['nama']) ?></td>
-        <td><?= htmlspecialchars($m['prodi']) ?></td>
-        <td><?= htmlspecialchars($m['angkatan']) ?></td>
-      </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-</main>
-
-<footer class="bg-light text-center py-3">
-  <small>&copy; 2025 VINASAHARA</small>
+<!-- Footer -->
+<footer class="text-center py-3 bg-light mt-4">
+    <small>© 2025 VINASAHARA</small>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
